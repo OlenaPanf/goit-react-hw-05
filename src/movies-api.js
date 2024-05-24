@@ -11,15 +11,15 @@ const options = {
   },
 };
 
-//Отримую базовий URL для зображень
-async function getConfiguration() {
-  const url = `https://api.themoviedb.org/3/configuration?api_key=${apiKey}`;
+// Функція для отримання списку популярних фільмів
+async function getTrendingMovies() {
+  const url = `https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}`;
 
   try {
     const response = await axios.get(url, options);
-    return response.data.images;
+    return response.data.results;
   } catch (error) {
-    console.error('Error fetching configuration:', error);
+    console.error('Error fetching trending movies:', error);
   }
 }
 
@@ -57,12 +57,42 @@ async function searchMovies(query) {
 //   }
 // }
 
+// Функція для отримання деталей про фільм
+async function getMovieDetails(movieId) {
+  const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`;
+
+  try {
+    const response = await axios.get(url, options);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching movie details:', error);
+  }
+}
+
+//Отримую базовий URL для зображень
+async function getConfiguration() {
+  const url = `https://api.themoviedb.org/3/configuration?api_key=${apiKey}`;
+
+  try {
+    const response = await axios.get(url, options);
+    return response.data.images;
+  } catch (error) {
+    console.error('Error fetching configuration:', error);
+  }
+}
+
 //Функція для побудови повного URL зображення:
 function buildImageUrl(base_url, file_size, file_path) {
   return `${base_url}${file_size}${file_path}`;
 }
 
-export { getConfiguration, searchMovies, buildImageUrl };
+export {
+  getTrendingMovies,
+  searchMovies,
+  getMovieDetails,
+  getConfiguration,
+  buildImageUrl,
+};
 
 // async function main() {
 //   const query = 'keyword'; // Змінюйте це значення для пошуку різних фільмів
