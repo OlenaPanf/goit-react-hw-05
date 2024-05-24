@@ -87,3 +87,53 @@ export { getConfiguration, searchMovies, buildImageUrl };
 //     }
 //   }
 // }
+
+// import { useEffect, useState } from 'react';
+// import { getConfiguration, searchMovies, buildImageUrl } from './movies-api';
+
+// export default function App() {
+//   const [movies, setMovies] = useState([]);
+//   const [imagesConfig, setImagesConfig] = useState(null);
+
+//   useEffect(() => {
+//     async function fetchConfig() {
+//       const config = await getConfiguration();
+//       setImagesConfig(config);
+//     }
+
+//     async function fetchMovies() {
+//       const results = await searchMovies('Inception');
+//       setMovies(results);
+//     }
+
+//     fetchConfig();
+//     fetchMovies();
+//   }, []);
+
+//   if (!imagesConfig) {
+//     return <div>Loading...</div>;
+//   }
+
+//   return (
+//     <div>
+//       <h1>Movies</h1>
+//       <ul>
+//         {movies.map(movie => (
+//           <li key={movie.id}>
+//             <h2>{movie.title}</h2>
+//             {movie.poster_path && (
+//               <img
+//                 src={buildImageUrl(
+//                   imagesConfig.secure_base_url,
+//                   'w500',
+//                   movie.poster_path
+//                 )}
+//                 alt={movie.title}
+//               />
+//             )}
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// }
