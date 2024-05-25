@@ -12,7 +12,7 @@ export default function App() {
     <div>
       <Navigation />
      
-      <h1>Trending today</h1>
+      
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/movies" element={<MoviesPage />} />

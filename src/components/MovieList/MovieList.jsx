@@ -16,7 +16,6 @@ export default function MovieList() {
 
   return (
     <div>
-      {/* <h1>Trending Movies</h1> */}
       <ul>
         {movies.map((movie) => (
           <li key={movie.id}>
@@ -36,14 +35,3 @@ export default function MovieList() {
 
 
 
-// export default function MovieList({ movies }) {
-//   return (
-//     <ul>
-//       {movies.map((movie) => (
-//         <li key={movie.id}>
-//           <MovieList movie={movie} />
-//         </li>
-//       ))}
-//     </ul>
-//   );
-// }

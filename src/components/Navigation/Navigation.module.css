@@ -7,11 +7,14 @@
 
 .link {
   text-decoration: none;
-  color: blue;
+  color: black;
   font-weight: 700;
 }
 
+.link:hover {
+  text-decoration: underline; /* Додавання підкреслення */
+}
+
 .active {
-  color: blueviolet;
-  text-decoration: underline;
+  color: red;
 }

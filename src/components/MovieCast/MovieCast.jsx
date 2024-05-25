@@ -18,16 +18,3 @@ export default function MovieCast({ actors }) {
     );
 }
 
-//функція для одного актора
-// export default function MovieCast({ actor }) {
-//     // Створюємо повний URL зображення актора
-//   const imageUrl = buildImageUrl("https://image.tmdb.org/t/p/w500", actor.profile_path);
-
-//   return (
-//     <div>
-//       <img src={imageUrl} alt={actor.name} />
-//       <h3>{actor.name}</h3>
-//       <p>Character: {actor.character}</p>
-//     </div>
-//   );
-// }
