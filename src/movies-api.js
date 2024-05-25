@@ -86,14 +86,28 @@ function buildImageUrl(base_url, file_size, file_path) {
   return `${base_url}${file_size}${file_path}`;
 }
 
+// Функція для отримання інформації про акторський склад фільму
+async function getMovieCredits(movieId) {
+  const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}`;
+
+  try {
+    const response = await axios.get(url, options);
+    return response.data; // Повертаємо повні дані
+  } catch (error) {
+    console.error('Error fetching movie credits:', error);
+  }
+}
+
 export {
   getTrendingMovies,
   searchMovies,
   getMovieDetails,
   getConfiguration,
   buildImageUrl,
+  getMovieCredits,
 };
 
+//===============================================================================
 // async function main() {
 //   const query = 'keyword'; // Змінюйте це значення для пошуку різних фільмів
 //   const imagesConfig = await getConfiguration();

@@ -16,7 +16,7 @@ export default function Navigation() {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/moviesPage" className={getLinkClass}>
+          <NavLink to="/movies" className={getLinkClass}>
             Movies
           </NavLink>
         </li>
