@@ -98,6 +98,22 @@ async function getMovieCredits(movieId) {
   }
 }
 
+// Функція для отримання оглядів фільму
+async function getMovieReviews(movieId) {
+  const url = `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${apiKey}`;
+
+  try {
+    const response = await axios.get(url, options);
+    const reviews = response.data.results.map(review => ({
+      author: review.author,
+      content: review.content,
+    }));
+    return reviews;
+  } catch (error) {
+    console.error('Error fetching movie reviews:', error);
+  }
+}
+
 export {
   getTrendingMovies,
   searchMovies,
@@ -105,79 +121,5 @@ export {
   getConfiguration,
   buildImageUrl,
   getMovieCredits,
+  getMovieReviews,
 };
-
-//===============================================================================
-// async function main() {
-//   const query = 'keyword'; // Змінюйте це значення для пошуку різних фільмів
-//   const imagesConfig = await getConfiguration();
-
-//   if (imagesConfig) {
-//     const movies = await searchMovies(query);
-//     if (movies) {
-//       movies.forEach(movie => {
-//         const posterPath = movie.poster_path;
-//         if (posterPath) {
-//           const imageUrl = buildImageUrl(
-//             imagesConfig.secure_base_url,
-//             'w500',
-//             posterPath
-//           );
-//           console.log(`Title: ${movie.title}, Poster URL: ${imageUrl}`);
-//         } else {
-//           console.log(`Title: ${movie.title}, No poster available`);
-//         }
-//       });
-//     }
-//   }
-// }
-
-// import { useEffect, useState } from 'react';
-// import { getConfiguration, searchMovies, buildImageUrl } from './movies-api';
-
-// export default function App() {
-//   const [movies, setMovies] = useState([]);
-//   const [imagesConfig, setImagesConfig] = useState(null);
-
-//   useEffect(() => {
-//     async function fetchConfig() {
-//       const config = await getConfiguration();
-//       setImagesConfig(config);
-//     }
-
-//     async function fetchMovies() {
-//       const results = await searchMovies('Inception');
-//       setMovies(results);
-//     }
-
-//     fetchConfig();
-//     fetchMovies();
-//   }, []);
-
-//   if (!imagesConfig) {
-//     return <div>Loading...</div>;
-//   }
-
-//   return (
-//     <div>
-//       <h1>Movies</h1>
-//       <ul>
-//         {movies.map(movie => (
-//           <li key={movie.id}>
-//             <h2>{movie.title}</h2>
-//             {movie.poster_path && (
-//               <img
-//                 src={buildImageUrl(
-//                   imagesConfig.secure_base_url,
-//                   'w500',
-//                   movie.poster_path
-//                 )}
-//                 alt={movie.title}
-//               />
-//             )}
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// }

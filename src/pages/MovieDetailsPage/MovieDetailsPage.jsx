@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getMovieDetails, getConfiguration, buildImageUrl, getMovieCredits } from '../../movies-api';
+import { getMovieDetails, getConfiguration, buildImageUrl, getMovieCredits, getMovieReviews } from '../../movies-api';
 import MovieCast from '../../components/MovieCast/MovieCast';
+import MovieReviews from '../../components/MovieReviews/MovieReviews'; 
 
 export default function MovieDetailsPage() {
   const { id } = useParams();
-    const [movie, setMovie] = useState(null);
-    const [baseImageUrl, setBaseImageUrl] = useState('');
-    const [actors, setActors] = useState([]);
+  const [movie, setMovie] = useState(null);
+  const [baseImageUrl, setBaseImageUrl] = useState('');
+  const [actors, setActors] = useState([]);
+  const [reviews, setReviews] = useState([]); 
+
 
   useEffect(() => {
-    const fetchMovieDetails = async () => {
+      const fetchMovieDetails = async () => {
       const movieDetails = await getMovieDetails(id);
       setMovie(movieDetails);
       };
@@ -22,13 +25,18 @@ export default function MovieDetailsPage() {
       
       const fetchActorCredits = async () => {
       const credits = await getMovieCredits(id);
-      // Тут ви можете додати логіку для фільтрації акторів, якщо потрібно
-      setActors(credits.cast); // Припускаючи, що cast містить потрібну інформацію
+      setActors(credits.cast); 
+      };
+    
+      const fetchMovieReviews = async () => {
+      const fetchedReviews = await getMovieReviews(id);
+      setReviews(fetchedReviews);
       };
       
       fetchMovieDetails();
       fetchConfiguration();
       fetchActorCredits();
+      fetchMovieReviews();
   }, [id]);
 
   if (!movie ||!actors.length) {
@@ -51,7 +59,8 @@ export default function MovieDetailsPage() {
         ))}</p>
       </div>
             <div>
-                <MovieCast actors={actors} />
+          <MovieCast actors={actors} />
+          <MovieReviews reviews={reviews} />
       </div>
       </div>
       
