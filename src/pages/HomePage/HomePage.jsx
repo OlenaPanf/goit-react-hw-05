@@ -23,17 +23,7 @@ export default function HomePage() {
 }
 
 
-// import MovieList from '../../components/MovieList/MovieList'; // Імпортуйте MovieList
 
-// export default function HomePage() {
-//   return (
-//     <div>
-//       <h1>Trending today</h1>
-//       <MovieList /> 
-      
-//     </div>
-//   );
-// }
 
 
 

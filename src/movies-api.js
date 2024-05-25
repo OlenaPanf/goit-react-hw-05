@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-//Створюю файл конфігурації для API-запитів
+//Файл конфігурації для API-запитів
 const apiKey = '6198839cbe21861b5981d3604da41577';
 const accessToken =
   'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MTk4ODM5Y2JlMjE4NjFiNTk4MWQzNjA0ZGE0MTU3NyIsInN1YiI6IjY2NGYyYWFmODk0ZDRlMDdjNzA2NTRkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.jCbrHTseQnFa6_N_dpZE_NE0IISjYuWSowVUR-TM_GQ';
@@ -37,26 +37,6 @@ async function searchMovies(query) {
   }
 }
 
-// async function searchMovies(query) {
-//   const encodedQuery = encodeURIComponent(query);
-//   const url = `https://api.themoviedb.org/3/search/movie`;
-//   const options = {
-//     params: {
-//       query: encodedQuery,
-//       include_adult: false,
-//       language: 'en-US',
-//       page: 1,
-//       api_key: apiKey,
-//     },
-//   };
-//   try {
-//     const response = await axios.get(url, options);
-//     return response.data.results;
-//   } catch (error) {
-//     console.error('Error searching movies:', error);
-//   }
-// }
-
 // Функція для отримання деталей про фільм
 async function getMovieDetails(movieId) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`;
@@ -69,7 +49,7 @@ async function getMovieDetails(movieId) {
   }
 }
 
-//Отримую базовий URL для зображень
+//Базовий URL для зображень
 async function getConfiguration() {
   const url = `https://api.themoviedb.org/3/configuration?api_key=${apiKey}`;
 
@@ -92,7 +72,7 @@ async function getMovieCredits(movieId) {
 
   try {
     const response = await axios.get(url, options);
-    return response.data; // Повертаємо повні дані
+    return response.data;
   } catch (error) {
     console.error('Error fetching movie credits:', error);
   }

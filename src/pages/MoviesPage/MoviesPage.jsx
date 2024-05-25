@@ -3,7 +3,6 @@ import { searchMovies } from '../../movies-api';
 import MovieList from '../../components/MovieList/MovieList'; 
 
 export default function MoviesPage() {
-  //const [keyword, setKeyword] = useState('');
   const [movies, setMovies] = useState([]);
   const formRef = useRef(null);
 
@@ -14,7 +13,7 @@ export default function MoviesPage() {
 
     const searchedMovies = await searchMovies(keyword);
     setMovies(searchedMovies);
-    formRef.current.reset();  // Очистити форму після пошуку
+    formRef.current.reset();  
   };
 
   return (
@@ -24,8 +23,6 @@ export default function MoviesPage() {
           <input
             type="text"
             name="keyword"
-            // value={keyword}
-            // onChange={(e) => setKeyword(e.target.value)}
             autoComplete="off"
             autoFocus
             placeholder="Search movies"
