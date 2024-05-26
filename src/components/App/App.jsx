@@ -5,24 +5,21 @@ import HomePage from '../../pages/HomePage/HomePage';
 import MoviesPage from '../../pages/MoviesPage/MoviesPage';
 import MovieDetailsPage from '../../pages/MovieDetailsPage/MovieDetailsPage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
-// import MovieCast from '../MovieCast/MovieCast';
-// import MovieReviews from '../MovieReviews/MovieReviews'
+import MovieCast from '../MovieCast/MovieCast';
+import MovieReviews from '../MovieReviews/MovieReviews';
 
 export default function App() {
 
   return (
     <div>
-      <Navigation />
-     
-      
+      <Navigation />   
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/movies" element={<MoviesPage />} />
-        <Route  path="/movie/:id" element={<MovieDetailsPage />} />
-        {/* <Route path="/movie/:id" element={<MovieDetailsPage />}>
+        <Route path="/movie/:id" element={<MovieDetailsPage />}>
           <Route path="/movie/:id/cast" element={<MovieCast />} />
           <Route path="/movie/:id/reviews" element={<MovieReviews />} />
-        </Route> */}
+        </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       

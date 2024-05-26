@@ -1,17 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams, NavLink, Outlet } from 'react-router-dom';
-import { getMovieDetails, getConfiguration, buildImageUrl, getMovieCredits, getMovieReviews } from '../../movies-api';
-import MovieCast from '../../components/MovieCast/MovieCast';
-import MovieReviews from '../../components/MovieReviews/MovieReviews'; 
+import { getMovieDetails, getConfiguration, buildImageUrl } from '../../movies-api';
 
 export default function MovieDetailsPage() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [baseImageUrl, setBaseImageUrl] = useState('');
-  const [actors, setActors] = useState([]);
-  const [reviews, setReviews] = useState([]); 
-
-
+  
   useEffect(() => {
       const fetchMovieDetails = async () => {
       const movieDetails = await getMovieDetails(id);
@@ -22,24 +17,12 @@ export default function MovieDetailsPage() {
       const config = await getConfiguration();
       setBaseImageUrl(config.secure_base_url);
       };
-      
-      const fetchActorCredits = async () => {
-      const credits = await getMovieCredits(id);
-      setActors(credits.cast); 
-      };
-    
-      const fetchMovieReviews = async () => {
-      const fetchedReviews = await getMovieReviews(id);
-      setReviews(fetchedReviews);
-      };
-      
+                 
       fetchMovieDetails();
-      fetchConfiguration();
-      fetchActorCredits();
-      fetchMovieReviews();
+      fetchConfiguration();      
   }, [id]);
 
-  if (!movie ||!actors.length) {
+  if (!movie) {
     return <div>Loading...</div>;
     }
     
@@ -50,7 +33,7 @@ export default function MovieDetailsPage() {
             <div>
       <img src={posterUrl} alt={`${movie.title} poster`} />    
       <h2>{movie.title}</h2>
-      <p>User Score:{movie.popularity}</p> 
+      <p>User Score: {movie.popularity}</p> 
       <h3>Overview</h3>    
       <p>{movie.overview}</p>
       <h3>Genres</h3>
@@ -58,11 +41,8 @@ export default function MovieDetailsPage() {
           <span key={name}>{name} </span>
         ))}</p>
       </div>
-            <div>
-          {actors && <MovieCast actors={actors} />}
-          {reviews && <MovieReviews reviews={reviews} />}
-        </div>
-        {/* <ul>
+            
+        <ul>
         <li>
           <NavLink to="cast">Cast</NavLink>
         </li>
@@ -71,11 +51,11 @@ export default function MovieDetailsPage() {
         </li>
         </ul>
         
-        <Outlet /> */}
+        <Outlet />
       </div>
       
   );
 }
 
-//<MovieCast actors={actors} />   
-//<MovieReviews reviews={reviews} />
+{/* <MovieCast actors={actors} />   
+<MovieReviews reviews={reviews} /> */}
