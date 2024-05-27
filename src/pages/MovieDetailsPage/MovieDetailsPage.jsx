@@ -1,11 +1,14 @@
+import css from './MovieDetailsPage.module.css'
 import { useState, useEffect } from 'react';
-import { useParams, NavLink, Outlet } from 'react-router-dom';
+import { useParams, NavLink, Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { getMovieDetails, getConfiguration, buildImageUrl } from '../../movies-api';
 
 export default function MovieDetailsPage() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [baseImageUrl, setBaseImageUrl] = useState('');
+  // const navigate = useNavigate();
+  // const location = useLocation();
   
   useEffect(() => {
       const fetchMovieDetails = async () => {
@@ -26,36 +29,49 @@ export default function MovieDetailsPage() {
     return <div>Loading...</div>;
     }
     
-    const posterUrl = buildImageUrl(baseImageUrl, 'w500', movie.poster_path);
+  const posterUrl = buildImageUrl(baseImageUrl, 'w500', movie.poster_path);
+  
+  // const handleGoBack = () => {
+  //   if (location.state && location.state.from) {
+  //     navigate(location.state.from);
+  //   } else {
+  //     navigate('/movies');
+  //   }
+  // };
 
     return (
-        <div>
-            <div>
-      <img src={posterUrl} alt={`${movie.title} poster`} />    
-      <h2>{movie.title}</h2>
-      <p>User Score: {movie.popularity}</p> 
-      <h3>Overview</h3>    
-      <p>{movie.overview}</p>
-      <h3>Genres</h3>
-      <p>{movie.genres.map(({ name }) => (
+      <div className={css.container}>
+        <Link className={css.linkAsButton}>← Go back</Link>
+        {/* <button onClick={handleGoBack}>← Go back</button> */}
+        <div className={css.card}>
+          <div className={css.cardImg}><img src={posterUrl} alt={`${movie.title} poster`} className={css.img} /></div>
+          <div className={css.cardInfo}>
+            <h2 className={css.title}>{movie.title}</h2>
+      <p className={css.text}>User Score:  {movie.popularity}</p> 
+      <h3 className={css.subtitle}>Overview</h3>    
+      <p className={css.text}>{movie.overview}</p>
+      <h3 className={css.subtitle}>Genres</h3>
+      <p className={css.text}>{movie.genres.map(({ name }) => (
           <span key={name}>{name} </span>
         ))}</p>
+          </div>
       </div>
-            
-        <ul>
+        <div className={css.addInfo}>
+          <p className={css.text}>Additional information</p>
+        <ul className={css.list}>
         <li>
-          <NavLink to="cast">Cast</NavLink>
+          <NavLink to="cast" state={{ from: location.state?.from }}>Cast</NavLink>
         </li>
         <li>
-          <NavLink to="reviews">Reviews</NavLink>
+          <NavLink to="reviews" state={{ from: location.state?.from }}>Reviews</NavLink>
         </li>
         </ul>
         
-        <Outlet />
+          <Outlet />
+        </div>     
+        
       </div>
       
   );
 }
 
-{/* <MovieCast actors={actors} />   
-<MovieReviews reviews={reviews} /> */}

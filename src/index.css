@@ -30,9 +30,9 @@ ol {
   overflow: hidden;
 }
 
-.list {
+/* .list {
   list-style-type: none;
-}
+} */
 
 button {
   cursor: pointer;
@@ -46,9 +46,9 @@ body {
   background-color: white;
 }
 
-li {
+/* li {
   list-style-type: none;
-}
+} */
 
 /*a {
   font-weight: 500;

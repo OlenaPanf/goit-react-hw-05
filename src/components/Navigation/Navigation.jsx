@@ -20,11 +20,6 @@ export default function Navigation() {
             Movies
           </NavLink>
         </li>
-        {/* <li>
-          <NavLink to="/moviesDetailsPage" className={getLinkClass}>
-            MovieDetailsPage
-          </NavLink>
-        </li> */}
       </ul>
     </nav>
   );

@@ -11,7 +11,7 @@ import MovieReviews from '../MovieReviews/MovieReviews';
 export default function App() {
 
   return (
-    <div>
+    <div className="container">
       <Navigation />   
       <Routes>
         <Route path="/" element={<HomePage />} />

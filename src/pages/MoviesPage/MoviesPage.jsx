@@ -1,3 +1,4 @@
+import css from './MoviesPage.module.css'
 import { useState, useRef } from 'react';
 import { searchMovies } from '../../movies-api';
 import MovieList from '../../components/MovieList/MovieList'; 
@@ -17,17 +18,18 @@ export default function MoviesPage() {
   };
 
   return (
-    <div>
+    <div className={css.container}>
       <div>
-        <form ref={formRef} onSubmit={handleSubmit}>
+        <form ref={formRef} onSubmit={handleSubmit} className={css.form}>
           <input
+            className={css.input}
             type="text"
             name="keyword"
             autoComplete="off"
             autoFocus
             placeholder="Search movies"
           />
-          <button type="submit">Search</button>
+          <button type="submit" >Search</button>
         </form>
       </div>
       <div>

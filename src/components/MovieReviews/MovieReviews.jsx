@@ -1,3 +1,4 @@
+import css from './MovieReviews.module.css'
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMovieReviews } from '../../movies-api';
@@ -22,9 +23,9 @@ export default function MovieReviews() {
   return (
     <div>
       {reviews.map((review, index) => (
-        <div key={index}>
-          <h3>Author: {review.author}</h3>
-          <p>{review.content}</p>
+        <div key={index} className={css.review}>
+          <h3>● Author: {review.author}</h3>
+          <p className={css.text}>{review.content}</p>
         </div>
       ))}
     </div>

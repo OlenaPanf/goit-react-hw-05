@@ -1,3 +1,4 @@
+import css from './MovieCast.module.css'
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMovieCredits, buildImageUrl } from '../../movies-api';  
@@ -26,10 +27,10 @@ export default function MovieCast() {
     return (
         <div>
             {actors.map((actor) => (
-                <div key={actor.id}>
-                    <img src={getImageUrl(actor.profile_path)} alt={actor.name} />
-                    <h3>{actor.name}</h3>
-                    <p>Character: {actor.character}</p>
+                <div key={actor.id} className={css.actor}>
+                    <img src={getImageUrl(actor.profile_path)} alt={actor.name} className={css.img} />
+                    <h3 className={css.title}>● {actor.name}</h3>
+                    <p className={css.text}>Character: {actor.character}</p>
                 </div>
             ))}
         </div>
