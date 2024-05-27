@@ -1,5 +1,5 @@
 import css from './MovieDetailsPage.module.css'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, NavLink, Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { getMovieDetails, getConfiguration, buildImageUrl } from '../../movies-api';
 
@@ -7,8 +7,12 @@ export default function MovieDetailsPage() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [baseImageUrl, setBaseImageUrl] = useState('');
+  const location = useLocation();
+
+  const backLinkRef = useRef(location.state ?? '/movies');
+  console.log(location);
   // const navigate = useNavigate();
-  // const location = useLocation();
+ 
   
   useEffect(() => {
       const fetchMovieDetails = async () => {
@@ -41,7 +45,7 @@ export default function MovieDetailsPage() {
 
     return (
       <div className={css.container}>
-        <Link className={css.linkAsButton}>← Go back</Link>
+        <Link to={backLinkRef.current} className={css.linkAsButton}>← Go back</Link>
         {/* <button onClick={handleGoBack}>← Go back</button> */}
         <div className={css.card}>
           <div className={css.cardImg}><img src={posterUrl} alt={`${movie.title} poster`} className={css.img} /></div>
@@ -60,10 +64,10 @@ export default function MovieDetailsPage() {
           <p className={css.text}>Additional information</p>
         <ul className={css.list}>
         <li>
-          <NavLink to="cast" state={{ from: location.state?.from }}>Cast</NavLink>
+          <NavLink to="cast">Cast</NavLink>
         </li>
         <li>
-          <NavLink to="reviews" state={{ from: location.state?.from }}>Reviews</NavLink>
+          <NavLink to="reviews">Reviews</NavLink>
         </li>
         </ul>
         
