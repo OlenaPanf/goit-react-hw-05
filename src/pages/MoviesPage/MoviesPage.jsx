@@ -1,19 +1,32 @@
 import css from './MoviesPage.module.css'
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { searchMovies } from '../../movies-api';
-import MovieList from '../../components/MovieList/MovieList'; 
+import MovieList from '../../components/MovieList/MovieList';
+import { useSearchParams } from 'react-router-dom'; 
 
 export default function MoviesPage() {
   const [movies, setMovies] = useState([]);
   const formRef = useRef(null);
+  const [searchParms, setSearchParams] = useSearchParams();
+  const movieFilter = searchParms.get('query') ?? '';
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      if (movieFilter) {
+        const searchedMovies = await searchMovies(movieFilter);
+        setMovies(searchedMovies);
+      }
+    };
+    
+    fetchMovies();
+  }, [movieFilter]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const keyword = formRef.current.elements.keyword.value.trim();
     if (keyword.trim() === '') return;
 
-    const searchedMovies = await searchMovies(keyword);
-    setMovies(searchedMovies);
+    setSearchParams({ query: keyword });
     formRef.current.reset();  
   };
 
@@ -27,7 +40,7 @@ export default function MoviesPage() {
             name="keyword"
             autoComplete="off"
             autoFocus
-            placeholder="Search movies"
+            placeholder=""
           />
           <button type="submit" >Search</button>
         </form>

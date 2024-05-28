@@ -1,16 +1,16 @@
 import css from './MovieDetailsPage.module.css'
 import { useState, useEffect, useRef } from 'react';
-import { useParams, NavLink, Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, NavLink, Outlet, Link, useLocation } from 'react-router-dom';
 import { getMovieDetails, getConfiguration, buildImageUrl } from '../../movies-api';
 
 export default function MovieDetailsPage() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [baseImageUrl, setBaseImageUrl] = useState('');
+  
   const location = useLocation();
-
   const backLinkRef = useRef(location.state ?? '/movies');
-  console.log(location);
+  //console.log(location);
   // const navigate = useNavigate();
  
   
@@ -34,14 +34,6 @@ export default function MovieDetailsPage() {
     }
     
   const posterUrl = buildImageUrl(baseImageUrl, 'w500', movie.poster_path);
-  
-  // const handleGoBack = () => {
-  //   if (location.state && location.state.from) {
-  //     navigate(location.state.from);
-  //   } else {
-  //     navigate('/movies');
-  //   }
-  // };
 
     return (
       <div className={css.container}>
