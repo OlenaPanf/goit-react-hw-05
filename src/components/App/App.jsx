@@ -16,7 +16,9 @@ export default function App() {
   return (
     <div className="container">
       <Toaster />
-      <Navigation />
+      <div className="navigation-container">
+        <Navigation />
+      </div>
       
       <Suspense fallback={<div>Loading page...</div>}>
       <Routes>
