@@ -2,6 +2,7 @@ import css from './MovieDetailsPage.module.css'
 import { useState, useEffect, useRef } from 'react';
 import { useParams, NavLink, Outlet, Link, useLocation } from 'react-router-dom';
 import { getMovieDetails, getConfiguration, buildImageUrl } from '../../movies-api';
+import toast from 'react-hot-toast';
 
 const defaultImg = 'https://dl-media.viber.com/10/share/2/long/vibes/icon/image/0x0/95e0/5688fdffb84ff8bed4240bcf3ec5ac81ce591d9fa9558a3a968c630eaba195e0.jpg';
 
@@ -9,28 +10,44 @@ export default function MovieDetailsPage() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [baseImageUrl, setBaseImageUrl] = useState('');
+  const [loading, setLoading] = useState(true);
   
   const location = useLocation();
   const backLinkRef = useRef(location.state ?? '/movies');
   
   useEffect(() => {
-      const fetchMovieDetails = async () => {
+    const fetchMovieDetails = async () => {
+      setLoading(true);
+      try {
       const movieDetails = await getMovieDetails(id);
-      setMovie(movieDetails);
+        setMovie(movieDetails);
+      } catch (error) {
+        toast.error('Failed to fetch movie details.');
+      } finally {
+        setLoading(false);
+      }
       };
       
-      const fetchConfiguration = async () => {
+    const fetchConfiguration = async () => {
+        try {
       const config = await getConfiguration();
-      setBaseImageUrl(config.secure_base_url);
+          setBaseImageUrl(config.secure_base_url);
+          } catch (error) {
+        toast.error('Failed to fetch configuration.');
+      }
       };
                  
       fetchMovieDetails();
       fetchConfiguration();      
   }, [id]);
 
-  if (!movie) {
+  if (loading) {
     return <div>Loading...</div>;
-    }
+  }
+
+  if (!movie) {
+    return <div>Error loading movie details.</div>;
+  }
     
   const posterUrl = movie.poster_path ? buildImageUrl(baseImageUrl, 'w500', movie.poster_path) : defaultImg;
 

@@ -1,23 +1,37 @@
 import css from './MovieCast.module.css'
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getMovieCredits, buildImageUrl } from '../../movies-api';  
+import { getMovieCredits, buildImageUrl } from '../../movies-api';
+import toast from 'react-hot-toast';  
 
 const defaultImg = 'https://dl-media.viber.com/10/share/2/long/vibes/icon/image/0x0/95e0/5688fdffb84ff8bed4240bcf3ec5ac81ce591d9fa9558a3a968c630eaba195e0.jpg';
 
 export default function MovieCast() {
     const { id } = useParams();
     const [actors, setActors] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-      const fetchActorCredits = async () => {
+        const fetchActorCredits = async () => {
+          setLoading(true);
+      try {
       const credits = await getMovieCredits(id);
-      setActors(credits.cast);
+          setActors(credits.cast);
+          } catch (error) {
+        toast.error('Failed to fetch actor credits.');
+      } finally {
+        setLoading(false);
+      }
+      
     };
 
     fetchActorCredits(); 
     },[id])
     
+    if (loading) {
+    return <div>Loading...</div>;
+  }
+
     if (!actors.length) {
     return <div>We don’t have any actors for this movie</div>;
     }

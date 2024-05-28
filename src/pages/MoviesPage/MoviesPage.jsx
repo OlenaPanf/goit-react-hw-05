@@ -2,10 +2,12 @@ import css from './MoviesPage.module.css'
 import { useState, useRef, useEffect } from 'react';
 import { searchMovies } from '../../movies-api';
 import MovieList from '../../components/MovieList/MovieList';
-import { useSearchParams } from 'react-router-dom'; 
+import { useSearchParams } from 'react-router-dom';
+import toast from 'react-hot-toast'; 
 
 export default function MoviesPage() {
   const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(false);
   const formRef = useRef(null);
   const [searchParms, setSearchParams] = useSearchParams();
   const movieFilter = searchParms.get('query') ?? '';
@@ -13,11 +15,18 @@ export default function MoviesPage() {
   useEffect(() => {
     const fetchMovies = async () => {
       if (movieFilter) {
+        setLoading(true);
+        try {
         const searchedMovies = await searchMovies(movieFilter);
-        setMovies(searchedMovies);
+          setMovies(searchedMovies);
+        } catch (error) {
+          toast.error('Failed to fetch movies.');
+        } finally {
+          setLoading(false);
+        }
       }
     };
-    
+
     fetchMovies();
   }, [movieFilter]);
 
@@ -46,7 +55,7 @@ export default function MoviesPage() {
         </form>
       </div>
       <div>
-        {movies.length > 0 && <MovieList movies={movies} />}
+        {loading ? <div>Loading...</div> : (movies.length > 0 && <MovieList movies={movies} />)}
       </div>
     </div>
   );
