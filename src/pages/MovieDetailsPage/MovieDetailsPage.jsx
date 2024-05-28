@@ -13,9 +13,6 @@ export default function MovieDetailsPage() {
   const location = useLocation();
   const backLinkRef = useRef(location.state ?? '/movies');
   
-  // const navigate = useNavigate();
- 
-  
   useEffect(() => {
       const fetchMovieDetails = async () => {
       const movieDetails = await getMovieDetails(id);
